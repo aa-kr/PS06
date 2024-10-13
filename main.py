@@ -15,7 +15,7 @@ time.sleep(5)  # Задержка для загрузки всех элемен�
 # Создание CSV файла и запись заголовков
 with open('sofa_prices.csv', mode='w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file)
-    writer.writerow(['Цена'])
+    writer.writerow(['Название', 'Цена'])
 
     # Найдите элементы, содержащие информацию о диванах
     sofas = driver.find_elements(By.CLASS_NAME, '_Ud0k')
@@ -23,12 +23,12 @@ with open('sofa_prices.csv', mode='w', newline='', encoding='utf-8') as file:
     for sofa in sofas:
         try:
             # Получение названия и цены
-
+            name = sofa.find_element(By.CLASS_NAME, 'lsooF').find_element(By.TAG_NAME, 'span').text
             price = sofa.find_element(By.CLASS_NAME, 'pY3d2').find_element(By.TAG_NAME, 'span').text
-            print(f'Цена: {price}')
+            print(f'Название: {name}, Цена: {price}')
 
             # Запись в CSV файл
-            writer.writerow([price])
+            writer.writerow([name, price])
         except Exception as e:
             print(f'Ошибка при извлечении данных: {e}')
 
